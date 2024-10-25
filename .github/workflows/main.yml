@@ -1,0 +1,30 @@
+name: My First GitHub Actions
+
+on: [PUSH]
+
+jobs:
+  build:
+    runs-os: ubuntu-latest
+
+    strategy:
+      matix:
+        python-version: [3.8,3.9]
+
+        setups:
+        - users: actions/checkout@3
+        - name: Set up Python
+          user: actions/setup-python@v2
+          with:
+            python-version: ${{ matrix.python-version}}
+
+        - name: install dependencies
+          run: |
+            python -m pip install  -- upgrade pip
+            pip install pytest
+
+
+        - name : Run tests
+          run: |
+            cd src 
+            python -m pytest addtion.py
+          
